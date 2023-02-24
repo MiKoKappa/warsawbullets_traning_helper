@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Navbar = ({ backAction, availableDogs, date }) => {
+const Navbar = ({ backAction, availableDogs, date, people }) => {
     return (
         <nav className="navbar container mt-2" role="navigation" aria-label="main navigation">
             <img alt="Warsaw Bullets Logo" style={{ zIndex: 100 }} src={require("../../src/bullets.png")} />
@@ -15,6 +15,19 @@ const Navbar = ({ backAction, availableDogs, date }) => {
                 </div>
                 <span className="navbar-item has-text-weight-semibold is-size-5">
                     Trening: {date.toLocaleDateString()}
+                </span>
+                <span className="navbar-item has-text-weight-semibold is-size-5 navbar-item has-dropdown is-hoverable">
+                    <div className="navbar-link">
+                        <span className="mr-2">{people.length}</span>
+                        osób
+                    </div>
+                    <div className="navbar-dropdown">
+                        {people.sort(function (a, b) { return (a > b ? 1 : (a === b ? 0 : -1)) }).map(v =>
+                            <span key={v} className="navbar-item">
+                                {v}
+                            </span>
+                        )}
+                    </div>
                 </span>
                 <span className="navbar-item has-text-weight-semibold is-size-5 navbar-item has-dropdown is-hoverable">
                     <div className="navbar-link">

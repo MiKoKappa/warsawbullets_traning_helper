@@ -16,7 +16,7 @@ const Modal = ({ isActive, setIsActive, availableDogs, action }) => {
                                 <p>Następujące psy nie mają wejść:</p>
                                 <ul>
                                     {availableDogs.filter(item => !item.firstEnter && !item.secondEnter).map(elem =>
-                                        <li className="text-bad">
+                                        <li key={elem.name} className="text-bad">
                                             {elem.name}
                                         </li>
                                     )}
@@ -29,7 +29,7 @@ const Modal = ({ isActive, setIsActive, availableDogs, action }) => {
                                 <p>Następujące psy mają ćwiczenia tylko w jednym wejściu:</p>
                                 <ul>
                                     {availableDogs.filter(item => (!item.firstEnter && item.secondEnter) || (item.firstEnter && !item.secondEnter)).map(elem =>
-                                        <li className="text-warning">
+                                        <li key={elem.name} className="text-warning">
                                             {elem.name}
                                         </li>
                                     )}
