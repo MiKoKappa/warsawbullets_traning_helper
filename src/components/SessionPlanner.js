@@ -71,7 +71,7 @@ const SessionPlanner = ({ trainingSession, setTrainingSession, availableDogs, se
                                                     }
                                                 }}>
                                                 <option>-</option>
-                                                {availableDogs.filter(item => !v.dogs.includes(item.name) || item.name === elem).map(elem =>
+                                                {availableDogs.filter(item => !v.dogs.includes(item.name) || item.name === elem).sort(function (a, b) { return (a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)) }).map(elem =>
                                                     <option value={elem.name}>{elem.name}</option>
                                                 )}
                                             </select>
@@ -81,7 +81,7 @@ const SessionPlanner = ({ trainingSession, setTrainingSession, availableDogs, se
                                     <div className="select is-fullwidth block">
                                         <select onChange={(e) => { setTrainingSession([...trainingSession.filter(elem => elem.id !== v.id), { id: v.id, dogs: [...v.dogs, e.target.value], activity: v.activity }]); const newDog = { ...availableDogs.find(item => item.name === e.target.value) }; newDog[enterID] = true; setAvailableDogs([...availableDogs.filter(item => item.name !== e.target.value), newDog]); e.target.value = "-" }}>
                                             <option>-</option>
-                                            {availableDogs.filter(item => !v.dogs.includes(item.name)).map(elem =>
+                                            {availableDogs.filter(item => !v.dogs.includes(item.name)).sort(function (a, b) { return (a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)) }).map(elem =>
                                                 <option value={elem.name}>{elem.name}</option>
                                             )}
                                         </select>

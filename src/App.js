@@ -32,7 +32,6 @@ function App() {
             let index = 6;
             while (worksheet.getCell(index, 1).value?.length > 0) {
               cell = column.values[index];
-              console.log(`${worksheet.getCell(index, 1)} - ${cell}`);
               if (cell && /[tT].*/.test(cell)) {
                 dogs.push({
                   name: worksheet.getCell(index, 1).value,

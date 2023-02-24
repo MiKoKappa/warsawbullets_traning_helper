@@ -24,8 +24,8 @@ const Navbar = ({ backAction, availableDogs, date }) => {
                         do uzupełnienia
                     </div>
                     <div className="navbar-dropdown">
-                        {availableDogs.filter(v => !v.firstEnter && !v.secondEnter).map(v =>
-                            <span className="navbar-item text-bad">
+                        {availableDogs.filter(v => !v.firstEnter && !v.secondEnter).sort(function (a, b) { return (a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)) }).map(v =>
+                            <span key={v.name} className="navbar-item text-bad">
                                 {v.name}
                             </span>
                         )}
@@ -33,16 +33,16 @@ const Navbar = ({ backAction, availableDogs, date }) => {
                             (availableDogs.filter(v => !v.firstEnter && !v.secondEnter).length > 0 && (availableDogs.filter(v => v.firstEnter && !v.secondEnter).length > 0 || availableDogs.filter(v => !v.firstEnter && v.secondEnter).length > 0)) ||
                                 (availableDogs.filter(v => !v.firstEnter && !v.secondEnter).length > 0 && availableDogs.filter(v => v.firstEnter && v.secondEnter).length > 0) ? <hr className="navbar-divider" /> : null
                         }
-                        {availableDogs.filter(v => (v.firstEnter && !v.secondEnter) || (!v.firstEnter && v.secondEnter)).map(v =>
-                            <span className="navbar-item text-warning">
+                        {availableDogs.filter(v => (v.firstEnter && !v.secondEnter) || (!v.firstEnter && v.secondEnter)).sort(function (a, b) { return (a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)) }).map(v =>
+                            <span key={v.name} className="navbar-item text-warning">
                                 {v.name}
                             </span>
                         )}
                         {
                             (availableDogs.filter(v => v.firstEnter && v.secondEnter).length > 0 && (availableDogs.filter(v => v.firstEnter && !v.secondEnter).length > 0 || availableDogs.filter(v => !v.firstEnter && v.secondEnter).length > 0)) ? <hr className="navbar-divider" /> : null
                         }
-                        {availableDogs.filter(v => v.firstEnter && v.secondEnter).map(v =>
-                            <span className="navbar-item text-good">
+                        {availableDogs.filter(v => v.firstEnter && v.secondEnter).sort(function (a, b) { return (a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)) }).map(v =>
+                            <span key={v.name} className="navbar-item text-good">
                                 {v.name}
                             </span>
                         )}
