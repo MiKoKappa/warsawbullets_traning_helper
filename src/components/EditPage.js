@@ -11,7 +11,7 @@ const EditPage = ({ availableDogs, setAvailableDogs, setEditing, firstSession, s
     return (
         <section className="container">
             <Modal action={() => { constructPDF(date, firstSession, secondSession) }} isActive={warningModal} setIsActive={setWarningModal} availableDogs={availableDogs} />
-            <Navbar backAction={() => { setEditing(false); setFirstSession([]); setSecondSession([]); setAvailableDogs([...availableDogs.map(e => { return { name: e.name, firstEnter: false, secondEnter: false } })]) }} availableDogs={availableDogs} date={date} />
+            <Navbar backAction={() => { setEditing(false); setFirstSession([...firstSession.map(v => { return { ...v, dogs: [] } })]); setSecondSession([...secondSession.map(v => { return { ...v, dogs: [] } })]); setAvailableDogs([...availableDogs.map(e => { return { name: e.name, firstEnter: false, secondEnter: false } })]) }} availableDogs={availableDogs} date={date} />
             <div className="block box mt-6">
                 <SessionPlanner trainingSession={firstSession} setTrainingSession={setFirstSession} availableDogs={availableDogs} setAvailableDogs={setAvailableDogs} title={"Wejście I"} enterID={"firstEnter"} />
                 <hr className="navbar-divider" />
