@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const SessionPlanner = ({ trainingSession, setTrainingSession, availableDogs, setAvailableDogs, title, enterID }) => {
+const SessionPlanner = ({ trainingSession, setTrainingSession, availableDogs, setAvailableDogs, title, enterID, copy }) => {
 
     const [previousValue, setPreviousValue] = useState('');
 
@@ -126,10 +126,16 @@ const SessionPlanner = ({ trainingSession, setTrainingSession, availableDogs, se
 
                     )}
                 </div>
-                <button onClick={() => { setTrainingSession([...trainingSession, { id: new Date().getTime(), dogs: [], activity: "", tasks: "" }]) }} className={`button is-good has-text-weight-semibold`}><span className="has-text-weight-semibold">Dodaj ćwiczenie</span> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="icon ml-2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-                </button>
+                <div className='is-flex is-flex-direction-row is-justify-content-space-between	is-align-items-center'>
+                    <button onClick={() => { setTrainingSession([...trainingSession, { id: new Date().getTime(), dogs: [], activity: "", tasks: "" }]) }} className={`button is-good has-text-weight-semibold`}><span className="has-text-weight-semibold">Dodaj ćwiczenie</span> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="icon ml-2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    </button>
+                    {copy && trainingSession.length > 0 ?
+                        <button onClick={copy} className={`button has-text-weight-semibold`}>
+                            <span className="has-text-weight-semibold">Kopiuj na kolejne wejście</span>
+                        </button> : null}
+                </div>
             </div> : null}</>
     )
 }

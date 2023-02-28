@@ -13,7 +13,7 @@ const EditPage = ({ availableDogs, setAvailableDogs, setEditing, firstSession, s
             <Modal action={() => { constructPDF(date, firstSession, secondSession) }} isActive={warningModal} setIsActive={setWarningModal} availableDogs={availableDogs} />
             <Navbar people={people} backAction={() => { setEditing(false); setFirstSession([...firstSession.map(v => { return { ...v, dogs: [] } })]); setSecondSession([...secondSession.map(v => { return { ...v, dogs: [] } })]); setAvailableDogs([...availableDogs.map(e => { return { name: e.name, firstEnter: false, secondEnter: false } })]) }} availableDogs={availableDogs} date={date} />
             <div className="block box mt-6">
-                <SessionPlanner trainingSession={firstSession} setTrainingSession={setFirstSession} availableDogs={availableDogs} setAvailableDogs={setAvailableDogs} title={"Wejście I"} enterID={"firstEnter"} />
+                <SessionPlanner copy={() => { setSecondSession(firstSession); setAvailableDogs(availableDogs.map(i => i.firstEnter ? { ...i, secondEnter: true } : i)) }} trainingSession={firstSession} setTrainingSession={setFirstSession} availableDogs={availableDogs} setAvailableDogs={setAvailableDogs} title={"Wejście I"} enterID={"firstEnter"} />
                 <hr className="navbar-divider" />
                 <SessionPlanner trainingSession={secondSession} setTrainingSession={setSecondSession} availableDogs={availableDogs} setAvailableDogs={setAvailableDogs} title={"Wejście II"} enterID={"secondEnter"} />
                 <hr className="navbar-divider" />
