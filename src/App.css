@@ -40,3 +40,15 @@ input[type="file"] {
 .select:not(.is-multiple):not(.is-loading)::after {
   border-color: #c7d32b;
 }
+
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-10px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
+}

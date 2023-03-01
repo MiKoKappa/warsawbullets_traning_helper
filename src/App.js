@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import ExcelJS from 'exceljs'
+import axios from 'axios'
 import "./App.css"
 import EditPage from "./components/EditPage";
 import FilePage from "./components/FilePage";
 
 
 function App() {
-  const [file, setFile] = useState();
   const [loaded, setLoaded] = useState(false);
   const [date, setDate] = useState(new Date());
   const [availableDogs, setAvailableDogs] = useState([]);
@@ -19,63 +18,35 @@ function App() {
     setAvailableDogs([]);
     setPeople([]);
     setLoaded(false);
-    const dogs = [];
-    const peopleTemp = [];
-    if (typeof (file) === "object") {
-      const fileReader = new FileReader();
-      fileReader.onloadend = async e => {
-        setLoaded(true);
-        const workbook = new ExcelJS.Workbook();
-        await workbook.xlsx.load(e.target.result);
-        const worksheetDogs = workbook.getWorksheet(1);
-        const worksheetPeople = workbook.getWorksheet('OwnerData');
-        for (let index = 1; index < worksheetDogs._columns.length; index++) {
-          const column = worksheetDogs.getColumn(index);
-          let cell = column.values[3];
-          if (typeof (cell) === "object" && date && cell.toLocaleDateString() === date.toLocaleDateString()) {
-            let index = 6;
-            while (worksheetDogs.getCell(index, 1).value?.length > 0) {
-              cell = column.values[index];
-              if (cell && /[tT].*/.test(cell)) {
-                const dogName = worksheetDogs.getCell(index, 1).value
-                let i = 1;
-                while (worksheetPeople.getCell(i, 1).value !== dogName && i < worksheetPeople.rowCount) {
-                  i++;
-                }
-                if (worksheetPeople.getCell(i, 1).value === dogName) {
-                  worksheetPeople.getCell(i, 2).value.split(',').forEach(element => {
-                    const personName = element[0] === " " ? element.substring(1) : element;
-                    if (!peopleTemp.includes(personName)) {
-                      peopleTemp.push(personName);
-                    }
-                  });
-                }
-                if (worksheetPeople.getCell(i, 1).value !== worksheetPeople.getCell(i, 2).value) {
-                  dogs.push({
-                    name: dogName,
-                    firstEnter: false,
-                    secondEnter: false
-                  });
-                }
-              }
-              index++;
-            }
-          }
-        }
-        setAvailableDogs(dogs);
-        setPeople(peopleTemp);
-      };
-      fileReader.readAsArrayBuffer(file);
-    }
 
-  }, [file, date]);
+    const url = "https://script.google.com/macros/s/AKfycbzd6TDalEvb3B4J1I-hfIHSfmup7GhVMeFnxmMhUkV31UaEE6coJQrYp-IGfajc7eppCQ/exec?date=" + (date.getMonth() + 1) + "-" + date.getDate() + "-" + date.getFullYear();
+
+    axios.get(url, {
+      headers: {
+        'Content-Type': "text/plain",
+      }
+    }).then(res => {
+      if (res.data.data === "ERR") {
+        setLoaded(true);
+      }
+      else {
+        setLoaded(true);
+        if (res.data.data.dogs.length > 0) {
+
+          setAvailableDogs(res.data.data.dogs.map(i => { return { name: i, firstEnter: false, secondEnter: false } }));
+        }
+        if (res.data.data.people.length > 0)
+          setPeople(res.data.data.people);
+      }
+    }).catch(e => { console.log(e) });
+  }, [date]);
 
   return (
     <>
       {editing ?
         <EditPage availableDogs={availableDogs} setAvailableDogs={setAvailableDogs} setEditing={setEditing} firstSession={firstSession} setFirstSession={setFirstSession} secondSession={secondSession} setSecondSession={setSecondSession} date={date} people={people} />
         :
-        <FilePage loaded={loaded} date={date} setDate={setDate} setFile={setFile} availableDogs={availableDogs} setEditing={setEditing} />
+        <FilePage loaded={loaded} date={date} setDate={setDate} availableDogs={availableDogs} setEditing={setEditing} />
       }
     </>
   );
