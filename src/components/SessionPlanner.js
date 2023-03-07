@@ -29,7 +29,7 @@ const SessionPlanner = ({ trainingSession, setTrainingSession, availableDogs, se
                     </div>
                     <hr className="navbar-divider" />
                     {trainingSession.sort((a, b) => a.id - b.id).map((v, i) =>
-                        <>
+                        <div key={"div" + i}>
                             <div className="columns mt-4">
                                 <div className="column is-1">
                                     <span className="tag is-black">{i + 1}</span>
@@ -39,8 +39,8 @@ const SessionPlanner = ({ trainingSession, setTrainingSession, availableDogs, se
                                 </div>
                                 <div className="column is-2">
                                     {/* Select with already selected dogs */}
-                                    {v.dogs.sort((a, b) => a - b).map(elem =>
-                                        <div className="select is-fullwidth block">
+                                    {v.dogs.sort((a, b) => a - b).map((elem, i) =>
+                                        <div key={i} className="select is-fullwidth block">
                                             <select value={elem} onClick={(e) => { setPreviousValue(e.target.value) }} onChange={
                                                 (e) => {
                                                     setTrainingSession(
@@ -55,34 +55,38 @@ const SessionPlanner = ({ trainingSession, setTrainingSession, availableDogs, se
                                                         prevDog[enterID] = false;
                                                         const newDog = { ...availableDogs.find(item => item.name === e.target.value) };
                                                         newDog[enterID] = true;
-                                                        setAvailableDogs(
-                                                            [...availableDogs.filter(item => (item.name !== previousValue && item.name !== e.target.value)),
-                                                                prevDog,
-                                                                newDog
-                                                            ])
+                                                        // setAvailableDogs(
+                                                        //     [...availableDogs.filter(item => (item.name !== previousValue && item.name !== e.target.value)),
+                                                        //         prevDog,
+                                                        //         newDog
+                                                        //     ])
                                                     }
                                                     else {
                                                         const prevDog = { ...availableDogs.find(item => item.name === previousValue) };
                                                         prevDog[enterID] = false;
-                                                        setAvailableDogs(
-                                                            [...availableDogs.filter(item => (item.name !== previousValue && item.name !== e.target.value)),
-                                                                prevDog
-                                                            ])
+                                                        // setAvailableDogs(
+                                                        //     [...availableDogs.filter(item => (item.name !== previousValue && item.name !== e.target.value)),
+                                                        //         prevDog
+                                                        //     ])
                                                     }
                                                 }}>
                                                 <option>-</option>
                                                 {availableDogs.filter(item => !v.dogs.includes(item.name) || item.name === elem).sort(function (a, b) { return (a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)) }).map(elem =>
-                                                    <option value={elem.name}>{elem.name}</option>
+                                                    <option key={elem.name} value={elem.name}>{elem.name}</option>
                                                 )}
                                             </select>
                                         </div>
                                     )}
                                     {/* Select new doggo */}
                                     <div className="select is-fullwidth block">
-                                        <select onChange={(e) => { setTrainingSession([...trainingSession.filter(elem => elem.id !== v.id), { id: v.id, dogs: [...v.dogs, e.target.value], activity: v.activity }]); const newDog = { ...availableDogs.find(item => item.name === e.target.value) }; newDog[enterID] = true; setAvailableDogs([...availableDogs.filter(item => item.name !== e.target.value), newDog]); e.target.value = "-" }}>
+                                        <select onChange={(e) => {
+                                            setTrainingSession([...trainingSession.filter(elem => elem.id !== v.id), { id: v.id, dogs: [...v.dogs, e.target.value], activity: v.activity }]); const newDog = { ...availableDogs.find(item => item.name === e.target.value) }; newDog[enterID] = true;
+                                            //  setAvailableDogs([...availableDogs.filter(item => item.name !== e.target.value), newDog]);
+                                            e.target.value = "-"
+                                        }}>
                                             <option>-</option>
                                             {availableDogs.filter(item => !v.dogs.includes(item.name)).sort(function (a, b) { return (a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)) }).map(elem =>
-                                                <option value={elem.name}>{elem.name}</option>
+                                                <option key={elem.name} value={elem.name}>{elem.name}</option>
                                             )}
                                         </select>
                                     </div>
@@ -91,7 +95,10 @@ const SessionPlanner = ({ trainingSession, setTrainingSession, availableDogs, se
                                     <textarea value={v.tasks} onChange={(e) => { setTrainingSession([...trainingSession.filter(elem => elem.id !== v.id), { id: v.id, dogs: v.dogs, activity: v.activity, tasks: e.target.value }]) }} className="textarea" placeholder="Zadania ..."></textarea>
                                 </div>
                                 <div className="column is-1">
-                                    <button onClick={(e) => { setTrainingSession([...trainingSession.filter(elem => elem.id !== v.id)]); setAvailableDogs([...availableDogs.map(item => { if (!v.dogs.includes(item.name)) { return item } else { const newItem = { ...item }; newItem[enterID] = false; return newItem } })]) }} className="button ml-2 mb-1">
+                                    <button onClick={(e) => {
+                                        setTrainingSession([...trainingSession.filter(elem => elem.id !== v.id)]);
+                                        // setAvailableDogs([...availableDogs.map(item => { if (!v.dogs.includes(item.name)) { return item } else { const newItem = { ...item }; newItem[enterID] = false; return newItem } })]) 
+                                    }} className="button ml-2 mb-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="icon text-bad">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                         </svg>
@@ -131,7 +138,7 @@ const SessionPlanner = ({ trainingSession, setTrainingSession, availableDogs, se
                             </div>
                             {i !== trainingSession.length - 1 ?
                                 <hr className="navbar-divider" />
-                                : null}</>
+                                : null}</div>
 
                     )}
                 </div>

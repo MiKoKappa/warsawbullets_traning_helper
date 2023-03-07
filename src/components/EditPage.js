@@ -16,9 +16,18 @@ const EditPage = ({ availableDogs, setAvailableDogs, setEditing, firstSession, s
     return (
         <section className="container">
             <Modal action={() => { constructPDF(date, firstSession, secondSession) }} isActive={warningModal} setIsActive={setWarningModal} availableDogs={availableDogs} />
-            <Navbar people={people} backAction={() => { setEditing(false); setFirstSession([...firstSession.map(v => { return { ...v, dogs: [] } })]); setSecondSession([...secondSession.map(v => { return { ...v, dogs: [] } })]); setAvailableDogs([...availableDogs.map(e => { return { name: e.name, firstEnter: false, secondEnter: false } })]) }} availableDogs={availableDogs} date={date} />
+            <Navbar people={people} backAction={() => {
+                setEditing(false); setFirstSession([...firstSession.map(v => { return { ...v, dogs: [] } })]); setSecondSession([...secondSession.map(v => { return { ...v, dogs: [] } })]);
+                // setAvailableDogs([...availableDogs.map(e => { return { name: e.name, firstEnter: false, secondEnter: false } })]) 
+            }} availableDogs={availableDogs} date={date} />
             <div className="block box mt-6">
-                <SessionPlanner copyOne={(v) => { setSecondSession([...secondSession, { ...v, id: new Date().getTime() }]); setAvailableDogs(availableDogs.map(i => v.dogs.includes(i.name) ? { ...i, secondEnter: true } : i)) }} copyAll={() => { setSecondSession(firstSession); setAvailableDogs(availableDogs.map(i => i.firstEnter ? { ...i, secondEnter: true } : i)) }} trainingSession={firstSession} setTrainingSession={setFirstSession} availableDogs={availableDogs} setAvailableDogs={setAvailableDogs} title={"Wejście I"} enterID={"firstEnter"} />
+                <SessionPlanner copyOne={(v) => {
+                    setSecondSession([...secondSession, { ...v, id: new Date().getTime() }]);
+                    // setAvailableDogs(availableDogs.map(i => v.dogs.includes(i.name) ? { ...i, secondEnter: true } : i))
+                }} copyAll={() => {
+                    setSecondSession(firstSession);
+                    //  setAvailableDogs(availableDogs.map(i => i.firstEnter ? { ...i, secondEnter: true } : i)) 
+                }} trainingSession={firstSession} setTrainingSession={setFirstSession} availableDogs={availableDogs} setAvailableDogs={setAvailableDogs} title={"Wejście I"} enterID={"firstEnter"} />
                 <hr className="navbar-divider" />
                 <SessionPlanner trainingSession={secondSession} setTrainingSession={setSecondSession} availableDogs={availableDogs} setAvailableDogs={setAvailableDogs} title={"Wejście II"} enterID={"secondEnter"} />
                 <hr className="navbar-divider" />

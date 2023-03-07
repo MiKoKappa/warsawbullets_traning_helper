@@ -16,6 +16,13 @@ function App() {
   const [file, setFile] = useState();
 
   useEffect(() => {
+    const firstSessionDogs = firstSession.map(v => v.dogs).flat();
+    const secondSessionDogs = secondSession.map(v => v.dogs).flat();
+    setAvailableDogs(availableDogs.map(i => { return { name: i.name, firstEnter: firstSessionDogs.includes(i.name), secondEnter: secondSessionDogs.includes(i.name) } }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [firstSession, secondSession])
+
+  useEffect(() => {
     if (typeof (file) === "object") {
       const fileReader = new FileReader();
       fileReader.onloadend = async e => {
