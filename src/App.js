@@ -13,6 +13,25 @@ function App() {
   const [firstSession, setFirstSession] = useState([]);
   const [secondSession, setSecondSession] = useState([]);
   const [people, setPeople] = useState([]);
+  const [file, setFile] = useState();
+
+  useEffect(() => {
+    if (typeof (file) === "object") {
+      const fileReader = new FileReader();
+      fileReader.onloadend = async e => {
+        const data = JSON.parse(String.fromCharCode.apply(null, new Uint8Array(e.target.result)));
+        console.log(data.availableDogs);
+        if (data.availableDogs.length > 0) {
+          setAvailableDogs([...data.availableDogs]);
+          setPeople(data.people);
+          setFirstSession(data.firstSession);
+          setSecondSession(data.secondSession);
+          setEditing(true);
+        }
+      }
+      fileReader.readAsArrayBuffer(file);
+    };
+  }, [file]);
 
   useEffect(() => {
     setAvailableDogs([]);
@@ -46,7 +65,7 @@ function App() {
       {editing ?
         <EditPage availableDogs={availableDogs} setAvailableDogs={setAvailableDogs} setEditing={setEditing} firstSession={firstSession} setFirstSession={setFirstSession} secondSession={secondSession} setSecondSession={setSecondSession} date={date} people={people} />
         :
-        <FilePage loaded={loaded} date={date} setDate={setDate} availableDogs={availableDogs} setEditing={setEditing} />
+        <FilePage loaded={loaded} date={date} setDate={setDate} availableDogs={availableDogs} setEditing={setEditing} setFile={setFile} />
       }
     </>
   );
