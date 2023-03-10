@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/warsawbullets_traning_helper/static/css/main.aa465f95.css",
-    "main.js": "/warsawbullets_traning_helper/static/js/main.554e8bcf.js",
+    "main.js": "/warsawbullets_traning_helper/static/js/main.04f5f3e0.js",
     "static/js/787.6e793780.chunk.js": "/warsawbullets_traning_helper/static/js/787.6e793780.chunk.js",
     "index.html": "/warsawbullets_traning_helper/index.html",
     "main.aa465f95.css.map": "/warsawbullets_traning_helper/static/css/main.aa465f95.css.map",
-    "main.554e8bcf.js.map": "/warsawbullets_traning_helper/static/js/main.554e8bcf.js.map",
+    "main.04f5f3e0.js.map": "/warsawbullets_traning_helper/static/js/main.04f5f3e0.js.map",
     "787.6e793780.chunk.js.map": "/warsawbullets_traning_helper/static/js/787.6e793780.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.aa465f95.css",
-    "static/js/main.554e8bcf.js"
+    "static/js/main.04f5f3e0.js"
   ]
 }
