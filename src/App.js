@@ -26,7 +26,8 @@ function App() {
     if (typeof (file) === "object") {
       const fileReader = new FileReader();
       fileReader.onloadend = async e => {
-        const data = JSON.parse(String.fromCharCode.apply(null, new Uint8Array(e.target.result)));
+        const decoder = new TextDecoder('UTF-8');
+        const data = JSON.parse(decoder.decode(e.target.result));
         console.log(data.availableDogs);
         if (data.availableDogs.length > 0) {
           setAvailableDogs([...data.availableDogs]);
