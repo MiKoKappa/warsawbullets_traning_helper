@@ -71,7 +71,13 @@ const SessionPlanner = ({ trainingSession, setTrainingSession, availableDogs, se
                                                     }
                                                 }}>
                                                 <option>-</option>
-                                                {availableDogs.filter(item => !v.dogs.includes(item.name) || item.name === elem).sort(function (a, b) { return (a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)) }).map(elem =>
+                                                {availableDogs.filter(item => !item[enterID]).filter(item => !v.dogs.includes(item.name) || item.name === elem).sort(function (a, b) { return (a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)) }).map(elem =>
+                                                    <option key={elem.name} value={elem.name}>{elem.name}</option>
+                                                )}
+                                                {availableDogs.filter(item => !item[enterID]).length > 0 && availableDogs.filter(item => item[enterID]).length > 0 ?
+                                                    <option disabled>──────────</option> : null
+                                                }
+                                                {availableDogs.filter(item => item[enterID]).filter(item => !v.dogs.includes(item.name) || item.name === elem).sort(function (a, b) { return (a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)) }).map(elem =>
                                                     <option key={elem.name} value={elem.name}>{elem.name}</option>
                                                 )}
                                             </select>
@@ -85,7 +91,13 @@ const SessionPlanner = ({ trainingSession, setTrainingSession, availableDogs, se
                                             e.target.value = "-"
                                         }}>
                                             <option>-</option>
-                                            {availableDogs.filter(item => !v.dogs.includes(item.name)).sort(function (a, b) { return (a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)) }).map(elem =>
+                                            {availableDogs.filter(item => !item[enterID]).filter(item => !v.dogs.includes(item.name)).sort(function (a, b) { return (a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)) }).map(elem =>
+                                                <option key={elem.name} value={elem.name}>{elem.name}</option>
+                                            )}
+                                            {availableDogs.filter(item => !item[enterID]).length > 0 && availableDogs.filter(item => item[enterID]).length > 0 ?
+                                                <option disabled>──────────</option> : null
+                                            }
+                                            {availableDogs.filter(item => item[enterID]).filter(item => !v.dogs.includes(item.name)).sort(function (a, b) { return (a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)) }).map(elem =>
                                                 <option key={elem.name} value={elem.name}>{elem.name}</option>
                                             )}
                                         </select>
