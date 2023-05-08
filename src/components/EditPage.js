@@ -19,7 +19,7 @@ const EditPage = ({ availableDogs, setAvailableDogs, setEditing, firstSession, s
             <Navbar people={people} backAction={() => {
                 setEditing(false); setFirstSession([...firstSession.map(v => { return { ...v, dogs: [] } })]); setSecondSession([...secondSession.map(v => { return { ...v, dogs: [] } })]);
                 // setAvailableDogs([...availableDogs.map(e => { return { name: e.name, firstEnter: false, secondEnter: false } })]) 
-            }} availableDogs={availableDogs} date={date} />
+            }} availableDogs={availableDogs} setAvailableDogs={setAvailableDogs} date={date} />
             <div className="block box mt-6">
                 <SessionPlanner copyOne={(v) => {
                     setSecondSession([...secondSession, { ...v, id: new Date().getTime() }]);

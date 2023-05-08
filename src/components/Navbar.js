@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
-const Navbar = ({ backAction, availableDogs, date, people }) => {
+const Navbar = ({ backAction, setAvailableDogs, availableDogs, date, people }) => {
+    const addDogInputRef = useRef();
+
     return (
         <nav className="navbar container mt-2" role="navigation" aria-label="main navigation">
             <img alt="Warsaw Bullets Logo" style={{ zIndex: 100 }} src={require("../../src/bullets.png")} />
@@ -37,6 +39,20 @@ const Navbar = ({ backAction, availableDogs, date, people }) => {
                         do uzupełnienia
                     </div>
                     <div className="navbar-dropdown">
+                        <div className="navbar-item is-align-items-end">
+                            <div className="control">
+                                <label className="label">Dodaj psa</label>
+                                <input ref={addDogInputRef} className="input is-small" type="text" />
+                            </div>
+                            <div className='button is-small ml-2' onClick={() => {
+                                const newDog = addDogInputRef.current.value;
+                                if (newDog.length > 0) {
+                                    addDogInputRef.current.value = '';
+                                    setAvailableDogs([...availableDogs, { firstEnter: false, secondEnter: false, name: newDog }]);
+                                }
+                            }}> + </div>
+                        </div>
+                        <hr className="navbar-divider" />
                         {availableDogs.filter(v => !v.firstEnter && !v.secondEnter).sort(function (a, b) { return (a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)) }).map(v =>
                             <span key={v.name} className="navbar-item text-bad">
                                 {v.name}
