@@ -59,7 +59,7 @@ export default function constructPDF(date, firstSession, secondSession) {
     firstSession.sort((a, b) => a.id - b.id).map((v, i) => [String(i + 1), String(v.activity), String(v.dogs.join(", ")), String(typeof v.tasks === "undefined" ? "" : v.tasks), " "]).forEach(elem => {
         dd.content[2].table.body.push(elem);
     });
-    secondSession.sort((a, b) => a.id - b.id).map((v, i) => [String(i + 1), String(v.activity), String(v.dogs.join(", ")), String(v.tasks), " "]).forEach(elem => {
+    secondSession.sort((a, b) => a.id - b.id).map((v, i) => [String(i + 1), String(v.activity), String(v.dogs.join(", ")), String(typeof v.tasks === "undefined" ? "" : v.tasks), " "]).forEach(elem => {
         dd.content[4].table.body.push(elem);
     });
     pdfMake.createPdf(dd).download("WarsawBullets_Trening_" + date.toLocaleDateString() + ".pdf");
