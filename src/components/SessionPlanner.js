@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 const SessionPlanner = ({ trainingSession, setTrainingSession, availableDogs, setAvailableDogs, title, enterID, copyAll, copyOne }) => {
 
     const [previousValue, setPreviousValue] = useState('');
 
+    const selectedDogs = useMemo(() => {
+        console.log(availableDogs, enterID, availableDogs.filter(item => item[enterID]))
+        return availableDogs.filter(item => item[enterID])
+    }, [availableDogs, enterID])
 
     return (
         <>
@@ -97,7 +101,7 @@ const SessionPlanner = ({ trainingSession, setTrainingSession, availableDogs, se
                                             {availableDogs.filter(item => !item[enterID]).length > 0 && availableDogs.filter(item => item[enterID]).length > 0 ?
                                                 <option disabled>──────────</option> : null
                                             }
-                                            {availableDogs.filter(item => item[enterID]).filter(item => !v.dogs.includes(item.name)).sort(function (a, b) { return (a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)) }).map(elem =>
+                                            {selectedDogs.filter(item => !v.dogs.includes(item.name)).sort(function (a, b) { return (a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)) }).map(elem =>
                                                 <option key={elem.name} value={elem.name}>{elem.name}</option>
                                             )}
                                         </select>
